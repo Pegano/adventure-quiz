@@ -611,7 +611,22 @@ const App = (() => {
 
     _animalQ = { animal, displayName, answer: isCorrect };
 
-    $('animal-emoji').textContent     = animal.emoji;
+    // Show GIF if available, fall back to emoji
+    const emojiEl = $('animal-emoji');
+    emojiEl.innerHTML = '';
+    emojiEl.classList.remove('has-gif');
+    const img = document.createElement('img');
+    img.src = `gifs/${animal.id}.gif`;
+    img.alt = animalName(animal);
+    img.className = 'animal-gif';
+    img.onerror = () => {
+      emojiEl.innerHTML = '';
+      emojiEl.textContent = animal.emoji;
+      emojiEl.classList.remove('has-gif');
+    };
+    img.onload = () => emojiEl.classList.add('has-gif');
+    emojiEl.appendChild(img);
+
     $('animal-label').textContent     = ui('animalLabel');
     $('animal-statement').textContent = ui('animalStatement', displayName);
 
@@ -719,7 +734,7 @@ const App = (() => {
     persistPlayer();
   }
 
-  function answerExplore(chosen, btn, opts) {
+  function answerExplore(chosen, _btn, opts) {
     opts.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
     const isRight = chosen === _exploreQ.ans;
 

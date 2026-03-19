@@ -393,6 +393,19 @@ input  { color: inherit; font: inherit; }
   line-height: 1;
   animation: popIn .3s cubic-bezier(.17,.67,.35,1.3);
 }
+.animal-gif {
+  width: 100%;
+  max-width: 220px;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  display: block;
+  margin: 0 auto;
+}
+.animal-emoji.has-gif {
+  font-size: 0;
+  line-height: 0;
+}
 @keyframes popIn { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
 .animal-label {

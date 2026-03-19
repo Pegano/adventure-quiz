@@ -20,7 +20,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "index.html,style.css,app.js"
+          source: "index.html,style.css,app.js,gifs"
           target: /var/www/adventure-quiz/
           strip_components: 0
 
