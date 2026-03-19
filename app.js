@@ -611,20 +611,24 @@ const App = (() => {
 
     _animalQ = { animal, displayName, answer: isCorrect };
 
-    // Show GIF if available, fall back to emoji
+    // Show image if available (gif preferred, jpg fallback), else show emoji
     const emojiEl = $('animal-emoji');
     emojiEl.innerHTML = '';
     emojiEl.classList.remove('has-gif');
     const img = document.createElement('img');
-    img.src = `gifs/${animal.id}.gif`;
     img.alt = animalName(animal);
     img.className = 'animal-gif';
-    img.onerror = () => {
-      emojiEl.innerHTML = '';
-      emojiEl.textContent = animal.emoji;
-      emojiEl.classList.remove('has-gif');
+    img.onerror = function() {
+      if (img.src.endsWith('.gif')) {
+        img.src = `gifs/${animal.id}.jpg`;
+      } else {
+        emojiEl.innerHTML = '';
+        emojiEl.textContent = animal.emoji;
+        emojiEl.classList.remove('has-gif');
+      }
     };
     img.onload = () => emojiEl.classList.add('has-gif');
+    img.src = `gifs/${animal.id}.gif`;
     emojiEl.appendChild(img);
 
     $('animal-label').textContent     = ui('animalLabel');
