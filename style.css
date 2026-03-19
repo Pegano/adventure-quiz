@@ -664,5 +664,29 @@ input  { color: inherit; font: inherit; }
 .toast.hidden { display: none; }
 @keyframes toastIn { from { opacity:0; transform:translateX(-50%) translateY(8px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
 
+/* ── Language toggle ─────────────────────────────────────────── */
+.lang-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.lang-toggle-profile {
+  margin-top: 10px;
+  justify-content: center;
+}
+.lang-btn {
+  padding: 4px 10px;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  transition: all var(--transition);
+  letter-spacing: .04em;
+}
+.lang-btn:hover { color: var(--text); background: var(--bg-card2); }
+.lang-btn.active { background: var(--teal); color: #000; }
+
 /* ── Utilities ────────────────────────────────────────────────── */
 .hidden { display: none !important; }

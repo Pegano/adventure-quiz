@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -19,7 +19,11 @@
     </div>
     <div class="header-right">
       <div class="score-pill">⭐ <span id="header-score">0</span></div>
-      <button class="btn-icon" onclick="App.showAchievements()" title="Achievements">🏅</button>
+      <button class="btn-icon" onclick="App.showAchievements()" title="Prestaties">🏅</button>
+      <div class="lang-toggle">
+        <button class="lang-btn" data-lang="nl" onclick="App.setLang('nl')">NL</button>
+        <button class="lang-btn" data-lang="en" onclick="App.setLang('en')">EN</button>
+      </div>
     </div>
   </header>
 
@@ -31,23 +35,29 @@
       <div class="logo-block">
         <div class="logo-palm">🌴</div>
         <h1 class="game-title">Adventure Quiz</h1>
-        <p class="game-subtitle">Malaysia &amp; Borneo Explorer</p>
+        <p class="game-subtitle" data-i18n="gameSubtitle">Maleisië &amp; Borneo Verkenner</p>
+        <div class="lang-toggle lang-toggle-profile">
+          <button class="lang-btn" data-lang="nl" onclick="App.setLang('nl')">NL</button>
+          <button class="lang-btn" data-lang="en" onclick="App.setLang('en')">EN</button>
+        </div>
       </div>
 
       <div class="card">
-        <h2>Choose your explorer</h2>
+        <h2 data-i18n="chooseExplorer">Kies je verkenner</h2>
         <div id="avatar-grid" class="avatar-grid"></div>
         <input
           id="name-input"
           class="text-input"
           type="text"
-          placeholder="Enter your name…"
+          data-i18n="namePlaceholder"
+          data-i18n-attr="placeholder"
+          placeholder="Voer je naam in…"
           maxlength="20"
           autocomplete="off"
         />
         <div id="saved-players-list" class="saved-list"></div>
-        <button class="btn-primary" onclick="App.startGame()">
-          Start Adventure! 🚀
+        <button class="btn-primary" onclick="App.startGame()" data-i18n="startBtn">
+          Start Avontuur! 🚀
         </button>
       </div>
     </div>
@@ -66,7 +76,7 @@
           </div>
           <div class="map-line"></div>
           <div class="map-dot" data-area="1" id="map-dot-1">
-            <span>🌿</span><small>Rainforest</small>
+            <span>🌿</span><small data-i18n="mapRainforest">Regenwoud</small>
           </div>
           <div class="map-line"></div>
           <div class="map-dot" data-area="2" id="map-dot-2">
@@ -79,32 +89,32 @@
         <button class="mode-card" onclick="App.startMode('animal')">
           <div class="mode-icon">🐾</div>
           <div class="mode-body">
-            <h3>Spot the Animal</h3>
-            <p>Identify Borneo's amazing wildlife</p>
+            <h3 data-i18n="modeAnimalTitle">Herken het Dier</h3>
+            <p data-i18n="modeAnimalDesc">Herken Borneo's bijzondere dieren</p>
           </div>
           <div class="mode-arrow">›</div>
         </button>
         <button class="mode-card" onclick="App.startMode('explore')">
           <div class="mode-icon">🌍</div>
           <div class="mode-body">
-            <h3>Explore Malaysia</h3>
-            <p>Test your geography knowledge</p>
+            <h3 data-i18n="modeExploreTitle">Ontdek Maleisië</h3>
+            <p data-i18n="modeExploreDesc">Test je geografiekennis</p>
           </div>
           <div class="mode-arrow">›</div>
         </button>
         <button class="mode-card" onclick="App.startMode('match')">
           <div class="mode-icon">🧩</div>
           <div class="mode-body">
-            <h3>Match &amp; Memory</h3>
-            <p>Pair animals with their habitats</p>
+            <h3 data-i18n="modeMatchTitle">Koppel &amp; Geheugen</h3>
+            <p data-i18n="modeMatchDesc">Koppel dieren aan hun leefgebied</p>
           </div>
           <div class="mode-arrow">›</div>
         </button>
         <button class="mode-card mode-speed" onclick="App.startMode('speed')">
           <div class="mode-icon">⚡</div>
           <div class="mode-body">
-            <h3>Speed Round</h3>
-            <p>60 seconds — answer as many as you can!</p>
+            <h3 data-i18n="modeSpeedTitle">Snelle Ronde</h3>
+            <p data-i18n="modeSpeedDesc">60 seconden — beantwoord zoveel mogelijk!</p>
           </div>
           <div class="mode-arrow">›</div>
         </button>
@@ -120,7 +130,7 @@
   <div id="screen-animal" class="screen">
     <div class="game-wrap">
       <div class="game-topbar">
-        <button class="btn-back" onclick="App.goMenu()">← Back</button>
+        <button class="btn-back" data-i18n="btnBack" onclick="App.goMenu()">← Terug</button>
         <div class="progress-bar"><div id="animal-prog" class="progress-fill" style="width:0%"></div></div>
         <div class="topbar-score">+<span id="animal-pts">0</span></div>
       </div>
@@ -132,15 +142,15 @@
       </div>
 
       <div id="animal-buttons" class="answer-row">
-        <button class="btn-answer btn-correct" onclick="App.answerAnimal(true)">✅ Correct</button>
-        <button class="btn-answer btn-wrong"   onclick="App.answerAnimal(false)">❌ Incorrect</button>
+        <button class="btn-answer btn-correct" data-i18n="btnCorrect" onclick="App.answerAnimal(true)">✅ Juist</button>
+        <button class="btn-answer btn-wrong"   data-i18n="btnWrong"   onclick="App.answerAnimal(false)">❌ Onjuist</button>
       </div>
 
       <div id="animal-feedback" class="feedback-panel hidden">
         <div id="animal-fb-icon" class="fb-icon"></div>
         <div id="animal-fb-result" class="fb-result"></div>
         <div id="animal-fb-fact" class="fun-fact"></div>
-        <button class="btn-primary" onclick="App.nextAnimal()">Next →</button>
+        <button class="btn-primary" data-i18n="btnNext" onclick="App.nextAnimal()">Volgende →</button>
       </div>
     </div>
   </div>
@@ -151,7 +161,7 @@
   <div id="screen-explore" class="screen">
     <div class="game-wrap">
       <div class="game-topbar">
-        <button class="btn-back" onclick="App.goMenu()">← Back</button>
+        <button class="btn-back" data-i18n="btnBack" onclick="App.goMenu()">← Terug</button>
         <div class="progress-bar"><div id="explore-prog" class="progress-fill" style="width:0%"></div></div>
         <div class="topbar-score">+<span id="explore-pts">0</span></div>
       </div>
@@ -166,7 +176,7 @@
         <div id="explore-fb-icon" class="fb-icon"></div>
         <div id="explore-fb-result" class="fb-result"></div>
         <div id="explore-fb-fact" class="fun-fact"></div>
-        <button class="btn-primary" onclick="App.nextExplore()">Next →</button>
+        <button class="btn-primary" data-i18n="btnNext" onclick="App.nextExplore()">Volgende →</button>
       </div>
     </div>
   </div>
@@ -177,19 +187,19 @@
   <div id="screen-match" class="screen">
     <div class="game-wrap">
       <div class="game-topbar">
-        <button class="btn-back" onclick="App.goMenu()">← Back</button>
-        <h3 class="topbar-title">Match &amp; Memory</h3>
-        <div id="match-left" class="topbar-score">0 left</div>
+        <button class="btn-back" data-i18n="btnBack" onclick="App.goMenu()">← Terug</button>
+        <h3 id="match-title-el" class="topbar-title">Koppel &amp; Geheugen</h3>
+        <div id="match-left" class="topbar-score">0 over</div>
       </div>
 
-      <p class="match-hint">Tap an animal, then tap its habitat to match!</p>
+      <p class="match-hint" data-i18n="matchHint">Tik een dier, dan zijn leefgebied om te koppelen!</p>
       <div id="match-grid" class="match-grid"></div>
 
       <div id="match-done" class="feedback-panel hidden">
         <div class="fb-icon">🎉</div>
-        <div class="fb-result">All pairs matched!</div>
+        <div id="match-done-result" class="fb-result" data-i18n="matchDoneResult">Alle paren gekoppeld!</div>
         <div id="match-score-txt" class="fun-fact"></div>
-        <button class="btn-primary" onclick="App.goMenu()">Back to Menu</button>
+        <button class="btn-primary" data-i18n="btnBackMenu" onclick="App.goMenu()">Terug naar Menu</button>
       </div>
     </div>
   </div>
@@ -209,8 +219,8 @@
           <span id="speed-timer">60</span>
         </div>
         <div class="speed-info">
-          <div class="speed-stat">Score <strong id="speed-score">0</strong></div>
-          <div class="speed-stat">Streak <strong id="speed-streak">0</strong> 🔥</div>
+          <div class="speed-stat"><span data-i18n="speedScoreLbl">Score</span> <strong id="speed-score">0</strong></div>
+          <div class="speed-stat"><span data-i18n="speedStreakLbl">Reeks</span> <strong id="speed-streak">0</strong> 🔥</div>
         </div>
       </div>
 
@@ -227,25 +237,25 @@
   <div id="screen-speed-results" class="screen">
     <div class="results-wrap">
       <div class="results-trophy">⚡</div>
-      <h2>Speed Round Complete!</h2>
+      <h2 data-i18n="speedResultsTitle">Snelle Ronde Voltooid!</h2>
 
       <div class="results-stats">
         <div class="stat-card">
           <div class="stat-val" id="res-score">0</div>
-          <div class="stat-lbl">Score</div>
+          <div class="stat-lbl" data-i18n="statScore">Score</div>
         </div>
         <div class="stat-card">
           <div class="stat-val" id="res-correct">0</div>
-          <div class="stat-lbl">Correct</div>
+          <div class="stat-lbl" data-i18n="statCorrect">Goed</div>
         </div>
         <div class="stat-card">
           <div class="stat-val" id="res-streak">0</div>
-          <div class="stat-lbl">Best Streak</div>
+          <div class="stat-lbl" data-i18n="statStreak">Beste Reeks</div>
         </div>
       </div>
 
       <div id="res-new-badges" class="new-badges"></div>
-      <button class="btn-primary" onclick="App.showScreen('menu')">Back to Menu</button>
+      <button class="btn-primary" data-i18n="btnBackMenu" onclick="App.showScreen('menu')">Terug naar Menu</button>
     </div>
   </div>
 
@@ -255,7 +265,7 @@
   <div id="overlay-achievements" class="overlay hidden" onclick="App.hideAchievements(event)">
     <div class="overlay-card" onclick="event.stopPropagation()">
       <div class="overlay-head">
-        <h2>🏅 Achievements</h2>
+        <h2 data-i18n="achievementsTitle">🏅 Prestaties</h2>
         <button class="btn-close" onclick="App.hideAchievements()">✕</button>
       </div>
       <div id="achievements-grid" class="achievements-grid"></div>
