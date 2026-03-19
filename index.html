@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Adventure Quiz — Malaysia & Borneo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <header id="header" class="hidden">
+    <div class="header-left">
+      <button class="btn-ghost" id="header-player-btn">
+        <span id="header-avatar"></span>
+        <span id="header-name"></span>
+      </button>
+    </div>
+    <div class="header-right">
+      <div class="score-pill">⭐ <span id="header-score">0</span></div>
+      <button class="btn-icon" onclick="App.showAchievements()" title="Achievements">🏅</button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: Profile / Player Select
+  ══════════════════════════════════════════════════════════ -->
+  <div id="screen-profile" class="screen active">
+    <div class="profile-wrap">
+      <div class="logo-block">
+        <div class="logo-palm">🌴</div>
+        <h1 class="game-title">Adventure Quiz</h1>
+        <p class="game-subtitle">Malaysia &amp; Borneo Explorer</p>
+      </div>
+
+      <div class="card">
+        <h2>Choose your explorer</h2>
+        <div id="avatar-grid" class="avatar-grid"></div>
+        <input
+          id="name-input"
+          class="text-input"
+          type="text"
+          placeholder="Enter your name…"
+          maxlength="20"
+          autocomplete="off"
+        />
+        <div id="saved-players-list" class="saved-list"></div>
+        <button class="btn-primary" onclick="App.startGame()">
+          Start Adventure! 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: Main Menu
+  ══════════════════════════════════════════════════════════ -->
+  <div id="screen-menu" class="screen">
+    <div class="menu-wrap">
+
+      <div id="map-progress" class="map-progress">
+        <div class="map-track">
+          <div class="map-dot active" data-area="0">
+            <span>🏙️</span><small>Kuala Lumpur</small>
+          </div>
+          <div class="map-line"></div>
+          <div class="map-dot" data-area="1" id="map-dot-1">
+            <span>🌿</span><small>Rainforest</small>
+          </div>
+          <div class="map-line"></div>
+          <div class="map-dot" data-area="2" id="map-dot-2">
+            <span>🏔️</span><small>Borneo</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="modes-grid">
+        <button class="mode-card" onclick="App.startMode('animal')">
+          <div class="mode-icon">🐾</div>
+          <div class="mode-body">
+            <h3>Spot the Animal</h3>
+            <p>Identify Borneo's amazing wildlife</p>
+          </div>
+          <div class="mode-arrow">›</div>
+        </button>
+        <button class="mode-card" onclick="App.startMode('explore')">
+          <div class="mode-icon">🌍</div>
+          <div class="mode-body">
+            <h3>Explore Malaysia</h3>
+            <p>Test your geography knowledge</p>
+          </div>
+          <div class="mode-arrow">›</div>
+        </button>
+        <button class="mode-card" onclick="App.startMode('match')">
+          <div class="mode-icon">🧩</div>
+          <div class="mode-body">
+            <h3>Match &amp; Memory</h3>
+            <p>Pair animals with their habitats</p>
+          </div>
+          <div class="mode-arrow">›</div>
+        </button>
+        <button class="mode-card mode-speed" onclick="App.startMode('speed')">
+          <div class="mode-icon">⚡</div>
+          <div class="mode-body">
+            <h3>Speed Round</h3>
+            <p>60 seconds — answer as many as you can!</p>
+          </div>
+          <div class="mode-arrow">›</div>
+        </button>
+      </div>
+
+      <div id="badge-strip" class="badge-strip"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: Spot the Animal
+  ══════════════════════════════════════════════════════════ -->
+  <div id="screen-animal" class="screen">
+    <div class="game-wrap">
+      <div class="game-topbar">
+        <button class="btn-back" onclick="App.goMenu()">← Back</button>
+        <div class="progress-bar"><div id="animal-prog" class="progress-fill" style="width:0%"></div></div>
+        <div class="topbar-score">+<span id="animal-pts">0</span></div>
+      </div>
+
+      <div id="animal-card" class="animal-card">
+        <div id="animal-emoji" class="animal-emoji"></div>
+        <div id="animal-label" class="animal-label"></div>
+        <div id="animal-statement" class="animal-statement"></div>
+      </div>
+
+      <div id="animal-buttons" class="answer-row">
+        <button class="btn-answer btn-correct" onclick="App.answerAnimal(true)">✅ Correct</button>
+        <button class="btn-answer btn-wrong"   onclick="App.answerAnimal(false)">❌ Incorrect</button>
+      </div>
+
+      <div id="animal-feedback" class="feedback-panel hidden">
+        <div id="animal-fb-icon" class="fb-icon"></div>
+        <div id="animal-fb-result" class="fb-result"></div>
+        <div id="animal-fb-fact" class="fun-fact"></div>
+        <button class="btn-primary" onclick="App.nextAnimal()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: Explore Malaysia
+  ══════════════════════════════════════════════════════════ -->
+  <div id="screen-explore" class="screen">
+    <div class="game-wrap">
+      <div class="game-topbar">
+        <button class="btn-back" onclick="App.goMenu()">← Back</button>
+        <div class="progress-bar"><div id="explore-prog" class="progress-fill" style="width:0%"></div></div>
+        <div class="topbar-score">+<span id="explore-pts">0</span></div>
+      </div>
+
+      <div id="explore-qcard" class="question-card">
+        <p id="explore-qnum" class="q-num"></p>
+        <p id="explore-q" class="q-text"></p>
+        <div id="explore-opts" class="opts-grid"></div>
+      </div>
+
+      <div id="explore-feedback" class="feedback-panel hidden">
+        <div id="explore-fb-icon" class="fb-icon"></div>
+        <div id="explore-fb-result" class="fb-result"></div>
+        <div id="explore-fb-fact" class="fun-fact"></div>
+        <button class="btn-primary" onclick="App.nextExplore()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: Match & Memory
+  ══════════════════════════════════════════════════════════ -->
+  <div id="screen-match" class="screen">
+    <div class="game-wrap">
+      <div class="game-topbar">
+        <button class="btn-back" onclick="App.goMenu()">← Back</button>
+        <h3 class="topbar-title">Match &amp; Memory</h3>
+        <div id="match-left" class="topbar-score">0 left</div>
+      </div>
+
+      <p class="match-hint">Tap an animal, then tap its habitat to match!</p>
+      <div id="match-grid" class="match-grid"></div>
+
+      <div id="match-done" class="feedback-panel hidden">
+        <div class="fb-icon">🎉</div>
+        <div class="fb-result">All pairs matched!</div>
+        <div id="match-score-txt" class="fun-fact"></div>
+        <button class="btn-primary" onclick="App.goMenu()">Back to Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: Speed Round
+  ══════════════════════════════════════════════════════════ -->
+  <div id="screen-speed" class="screen">
+    <div class="game-wrap speed-wrap">
+      <div class="speed-topbar">
+        <div class="timer-ring">
+          <svg viewBox="0 0 60 60">
+            <circle class="ring-bg" cx="30" cy="30" r="26"/>
+            <circle id="speed-ring" class="ring-fill" cx="30" cy="30" r="26"
+              stroke-dasharray="163.4" stroke-dashoffset="0"/>
+          </svg>
+          <span id="speed-timer">60</span>
+        </div>
+        <div class="speed-info">
+          <div class="speed-stat">Score <strong id="speed-score">0</strong></div>
+          <div class="speed-stat">Streak <strong id="speed-streak">0</strong> 🔥</div>
+        </div>
+      </div>
+
+      <div id="speed-qcard" class="question-card speed-qcard">
+        <p id="speed-q" class="q-text"></p>
+        <div id="speed-opts" class="opts-grid speed-opts"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: Speed Results
+  ══════════════════════════════════════════════════════════ -->
+  <div id="screen-speed-results" class="screen">
+    <div class="results-wrap">
+      <div class="results-trophy">⚡</div>
+      <h2>Speed Round Complete!</h2>
+
+      <div class="results-stats">
+        <div class="stat-card">
+          <div class="stat-val" id="res-score">0</div>
+          <div class="stat-lbl">Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="res-correct">0</div>
+          <div class="stat-lbl">Correct</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="res-streak">0</div>
+          <div class="stat-lbl">Best Streak</div>
+        </div>
+      </div>
+
+      <div id="res-new-badges" class="new-badges"></div>
+      <button class="btn-primary" onclick="App.showScreen('menu')">Back to Menu</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       OVERLAY: Achievements
+  ══════════════════════════════════════════════════════════ -->
+  <div id="overlay-achievements" class="overlay hidden" onclick="App.hideAchievements(event)">
+    <div class="overlay-card" onclick="event.stopPropagation()">
+      <div class="overlay-head">
+        <h2>🏅 Achievements</h2>
+        <button class="btn-close" onclick="App.hideAchievements()">✕</button>
+      </div>
+      <div id="achievements-grid" class="achievements-grid"></div>
+    </div>
+  </div>
+
+  <!-- ── TOAST ────────────────────────────────────────────── -->
+  <div id="toast" class="toast hidden"></div>
+
+</div><!-- #app -->
+<script src="app.js"></script>
+</body>
+</html>
