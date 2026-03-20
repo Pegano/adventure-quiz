@@ -142,63 +142,83 @@ const AVATARS = ['🦁', '🦊', '🐼', '🐯', '🦋', '🦅', '🐸', '🐬']
 
 const ANIMALS = [
   { id:'orangutan',      name:'Orangutan',            name_nl:'Orang-oetan',          emoji:'🦧', bg:'#3d2100',
+    similar:['proboscis','macaque','slow_loris'],
     fact:'Orangutans share 97% of their DNA with humans. They are the only great apes found in Asia and are critically endangered.',
     fact_nl:'Orang-oetans delen 97% van hun DNA met mensen. Ze zijn de enige mensapen in Azië en staan ernstig bedreigd.' },
   { id:'tapir',          name:'Malayan Tapir',         name_nl:'Maleise Tapir',         emoji:'🐾', bg:'#1a2a1a',
+    similar:['pygmy_elephant','sun_bear','binturong'],
     fact:'The Malayan Tapir is the largest of four tapir species. Its black-and-white coat breaks up its outline in dappled jungle light — and it swims brilliantly!',
     fact_nl:'De Maleise tapir is de grootste van vier tapirsoorten. Zijn zwart-witte vacht doorbreekt zijn silhouet in het gevlekte jungelicht — en hij zwemt uitstekend!' },
   { id:'proboscis',      name:'Proboscis Monkey',      name_nl:'Neusaap',               emoji:'🐒', bg:'#2a1f0a',
+    similar:['orangutan','macaque','slow_loris'],
     fact:'The male Proboscis Monkey has an enormous nose that amplifies its honking calls. It\'s found only in Borneo — and it\'s an excellent swimmer!',
     fact_nl:'De mannelijke neusaap heeft een enorme neus die zijn roepen versterkt. Hij leeft alleen op Borneo — en is een uitstekende zwemmer!' },
   { id:'pygmy_elephant', name:'Borneo Pygmy Elephant', name_nl:'Borneo Dwergolifant',   emoji:'🐘', bg:'#1a2a2a',
+    similar:['tapir','sun_bear'],
     fact:'Borneo\'s pygmy elephants are the smallest elephants in Asia — about 30% smaller than mainland Asian elephants. They\'re also noticeably more gentle.',
     fact_nl:'De dwergolifanten van Borneo zijn de kleinste olifanten in Azië — ongeveer 30% kleiner dan vastelandse Aziatische olifanten. Ze zijn ook merkbaar vredelievender.' },
   { id:'sun_bear',       name:'Sun Bear',              name_nl:'Maleise Honingbeer',    emoji:'🐻', bg:'#2a1500',
+    similar:['clouded_leopard','binturong','tapir'],
     fact:'Sun Bears are the world\'s smallest bears. Their extraordinary tongues (up to 25 cm!) are perfect for scooping honey out of beehives.',
     fact_nl:'Maleise honingberen zijn de kleinste beren ter wereld. Hun buitengewone tongen (tot 25 cm!) zijn perfect voor het scheppen van honing uit bijenkorven.' },
   { id:'clouded_leopard',name:'Clouded Leopard',       name_nl:'Nevelpanter',           emoji:'🐆', bg:'#2a200a',
+    similar:['sun_bear','binturong','pangolin'],
     fact:'Clouded Leopards have the longest canine teeth relative to body size of any wild cat, giving them an almost saber-toothed appearance.',
     fact_nl:'Nevelpanters hebben de langste hoektanden ten opzichte van hun lichaamsgrootte van alle wilde katachtigen — bijna als sabeltanden.' },
   { id:'hornbill',       name:'Rhinoceros Hornbill',   name_nl:'Neushoornhoornvogel',   emoji:'🦜', bg:'#001a0a',
+    similar:['hornbill2','flying_fox'],
     fact:'The Rhinoceros Hornbill is Sarawak\'s state bird. The upturned "horn" on its beak — called a casque — resonates its calls through the rainforest.',
     fact_nl:'De neushoornhoornvogel is de staatsvogel van Sarawak. De omgekrulde "hoorn" op zijn snavel — een casque genaamd — laat zijn roepen door het regenwoud resoneren.' },
   { id:'firefly',        name:'Firefly',               name_nl:'Vuurvliegje',           emoji:'✨', bg:'#000a1a',
+    similar:['fiddler_crab','pitcher'],
     fact:'Thousands of fireflies near Kampung Kuantan, Malaysia, flash in perfect synchrony — entire mangrove trees pulsing like living Christmas lights!',
     fact_nl:'Duizenden vuurvliegjes bij Kampung Kuantan flikkeren in perfecte synchronie — hele mangrovebomen pulseren als levende kerstlampjes!' },
   { id:'crocodile',      name:'Saltwater Crocodile',   name_nl:'Zoutwaterkrokodil',     emoji:'🐊', bg:'#0a1a0a',
+    similar:['cobra','sea_turtle'],
     fact:'The Saltwater Crocodile is the world\'s largest living reptile. Adults can exceed 6 metres in length and are known to swim far out to sea.',
     fact_nl:'De zoutwaterkrokodil is het grootste levende reptiel ter wereld. Volwassenen kunnen meer dan 6 meter worden en staan bekend om hun verre zeereizen.' },
   { id:'cobra',          name:'King Cobra',            name_nl:'Koningscobra',          emoji:'🐍', bg:'#1a1a00',
+    similar:['crocodile','sea_turtle'],
     fact:'The King Cobra is the world\'s longest venomous snake, reaching up to 5.5 metres. It\'s also the only snake species that builds a nest for its eggs.',
     fact_nl:'De koningscobra is de langste gifslang ter wereld, tot 5,5 meter. Het is ook de enige slangensoort die een nest bouwt voor haar eieren.' },
   { id:'pitcher',        name:'Pitcher Plant',         name_nl:'Bekerplant',            emoji:'🌿', bg:'#001a00',
+    similar:['firefly','colugo'],
     fact:'Borneo\'s Nepenthes rajah is the world\'s largest carnivorous plant. Its pitcher can hold up to 3.5 litres of digestive liquid!',
     fact_nl:'Borneo\'s Nepenthes rajah is de grootste vleesetende plant ter wereld. Haar beker kan tot 3,5 liter verteringsvloeistof bevatten!' },
   { id:'colugo',         name:'Colugo',                name_nl:'Colugo',                emoji:'🦇', bg:'#0a0a1a',
+    similar:['flying_fox','slow_loris','pangolin'],
     fact:'The Colugo — or "flying lemur" — doesn\'t actually fly or belong to lemurs. It glides between trees using a parachute-like membrane of skin.',
     fact_nl:'De colugo — ook wel "vliegende maki" — vliegt niet echt en is geen echte maki. Hij zweeft tussen bomen met een parachuteachtig huidvlies.' },
   { id:'slow_loris',     name:'Slow Loris',            name_nl:'Trage Lori',            emoji:'🌙', bg:'#100a1a',
+    similar:['orangutan','proboscis','macaque','colugo'],
     fact:'The Slow Loris is the world\'s only venomous primate. It licks venom from arm glands and mixes it with saliva, coating its teeth for a painful bite.',
     fact_nl:'De trage lori is het enige giftige primaat ter wereld. Het likt gif van armklieren en mengt dit met speeksel om zijn tanden te bedekken voor een pijnlijke beet.' },
   { id:'pangolin',       name:'Pangolin',              name_nl:'Schubdier',             emoji:'🦔', bg:'#1a0a00',
+    similar:['colugo','clouded_leopard','binturong'],
     fact:'When threatened, a Pangolin rolls into a tight armoured ball. Its scales are made of keratin — the same material as your fingernails.',
     fact_nl:'Als een schubdier wordt bedreigd, rolt het op tot een gepantserde bal. Zijn schubben zijn gemaakt van keratine — hetzelfde materiaal als je vingernagels.' },
   { id:'flying_fox',     name:'Giant Flying Fox',      name_nl:'Reuzen-vleerhond',      emoji:'🦇', bg:'#0a0010',
+    similar:['colugo','hornbill','hornbill2'],
     fact:'The Giant Flying Fox has a wingspan of up to 1.7 metres — one of the world\'s largest bats. It\'s a vital pollinator of rainforest trees.',
     fact_nl:'De reuzen-vleerhond heeft een vleugelspanwijdte tot 1,7 meter — een van \'s werelds grootste vleermuizen. Hij is een onmisbare bestuiver van regenwoudbomen.' },
   { id:'sea_turtle',     name:'Green Sea Turtle',      name_nl:'Groene Zeeschildpad',   emoji:'🐢', bg:'#00151a',
+    similar:['crocodile','fiddler_crab'],
     fact:'Sabah\'s Turtle Islands are a protected nesting sanctuary. Green Sea Turtles can live over 80 years and return to the exact beach where they were born.',
     fact_nl:'Sabah\'s Turtle Islands zijn een beschermd broedgebied. Groene zeeschildpadden worden ouder dan 80 jaar en keren terug naar het exacte strand waar ze zijn geboren.' },
   { id:'binturong',      name:'Binturong',             name_nl:'Binturong',             emoji:'🐈', bg:'#150a05',
+    similar:['sun_bear','clouded_leopard','macaque'],
     fact:'The Binturong — also called "bearcat" — smells like popcorn! The scent comes from a compound in its urine used for scent-marking territory.',
     fact_nl:'De binturong — ook wel "beerkat" — ruikt naar popcorn! De geur komt van een stof in zijn urine, gebruikt voor territoriummarkering.' },
   { id:'macaque',        name:'Long-tailed Macaque',   name_nl:'Langstaartige Makaak',  emoji:'🐵', bg:'#1a1000',
+    similar:['proboscis','orangutan','slow_loris'],
     fact:'Long-tailed Macaques in Malaysia have been observed using stone tools to crack open shellfish — one of the clearest examples of primate tool use in the wild.',
     fact_nl:'Langstaartige makaken in Maleisië gebruiken stenen als gereedschap om schelpdieren te kraken — een van de duidelijkste voorbeelden van gereedschapgebruik bij primaten in het wild.' },
   { id:'fiddler_crab',   name:'Fiddler Crab',          name_nl:'Wenkkrab',              emoji:'🦀', bg:'#001510',
+    similar:['sea_turtle','firefly'],
     fact:'Male Fiddler Crabs wave their one enormous claw to attract females. The enlarged claw can weigh up to half the crab\'s total body weight!',
     fact_nl:'Mannelijke wenkkrabben zwaaien met hun enorme schaar om vrouwtjes aan te trekken. De vergrote schaar kan tot de helft van het totale lichaamsgewicht wegen!' },
   { id:'hornbill2',      name:'Wreathed Hornbill',     name_nl:'Kranshoornvogel',       emoji:'🐦', bg:'#0a1500',
+    similar:['hornbill','flying_fox'],
     fact:'Male Wreathed Hornbills carry dozens of fruits in their gullet to pass through the tree wall to their partner, who is sealed inside a hollow tree during nesting.',
     fact_nl:'Mannelijke kranshoornvogels dragen tientallen vruchten in hun keel om aan hun partner te geven, die tijdens het nestelen opgesloten zit in een holle boom.' },
 ];
@@ -605,8 +625,14 @@ const App = (() => {
     if (isCorrect) {
       displayName = animalName(animal);
     } else {
-      const others = _animalPool.filter(a => a.id !== animal.id);
-      displayName = animalName(others[Math.floor(Math.random() * others.length)]);
+      // Pick a confusable animal from the similar list; fall back to full pool
+      const similarAnimals = (animal.similar || [])
+        .map(id => ANIMALS.find(a => a.id === id))
+        .filter(Boolean);
+      const candidates = similarAnimals.length > 0
+        ? similarAnimals
+        : ANIMALS.filter(a => a.id !== animal.id);
+      displayName = animalName(candidates[Math.floor(Math.random() * candidates.length)]);
     }
 
     _animalQ = { animal, displayName, answer: isCorrect };
