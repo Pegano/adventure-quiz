@@ -1096,5 +1096,32 @@ const App = (() => {
 document.addEventListener('DOMContentLoaded', () => App.init());
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
+  navigator.serviceWorker.register('/sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const newSW = reg.installing;
+      newSW.addEventListener('statechange', () => {
+        if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+          // New version waiting — show update toast
+          showUpdateToast();
+        }
+      });
+    });
+  });
+
+  // After SKIP_WAITING, the new SW takes over — reload to get fresh files
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
+}
+
+function showUpdateToast() {
+  const toast = document.getElementById('toast');
+  toast.innerHTML = '🆕 Update beschikbaar! <button onclick="installUpdate()" style="margin-left:8px;padding:2px 10px;border-radius:8px;background:var(--teal);color:#000;border:none;font-weight:bold;cursor:pointer">Vernieuwen</button>';
+  toast.classList.remove('hidden');
+}
+
+function installUpdate() {
+  navigator.serviceWorker.ready.then(reg => {
+    if (reg.waiting) reg.waiting.postMessage('SKIP_WAITING');
+  });
 }

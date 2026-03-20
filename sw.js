@@ -1,5 +1,5 @@
 /* Adventure Quiz — Service Worker */
-const CACHE = 'adventure-quiz-v1';
+const CACHE = 'adventure-quiz-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -30,13 +30,15 @@ const ASSETS = [
   '/gifs/hornbill2.gif',
 ];
 
+// Install: cache all assets
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE).then(c => c.addAll(ASSETS))
   );
-  self.skipWaiting();
+  // Don't skipWaiting here — wait for page to ask us to
 });
 
+// Activate: remove old caches
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
@@ -46,8 +48,14 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
+// Fetch: serve from cache, fall back to network
 self.addEventListener('fetch', e => {
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
+});
+
+// Message from page: skip waiting and take over immediately
+self.addEventListener('message', e => {
+  if (e.data === 'SKIP_WAITING') self.skipWaiting();
 });
