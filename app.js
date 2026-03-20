@@ -675,6 +675,10 @@ const App = (() => {
       }
     };
     img.onload = () => emojiEl.classList.add('has-gif');
+    img.onclick = () => {
+      $('lightbox-img').src = img.src;
+      $('lightbox').classList.remove('hidden');
+    };
     img.src = `gifs/${animal.id}.gif`;
     emojiEl.appendChild(img);
 
