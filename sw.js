@@ -1,5 +1,5 @@
 /* Adventure Quiz — Service Worker */
-const CACHE = 'adventure-quiz-v3';
+const CACHE = 'adventure-quiz-v4';
 const ASSETS = [
   '/',
   '/index.html',
