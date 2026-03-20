@@ -124,6 +124,14 @@
           </div>
           <div class="mode-arrow">›</div>
         </button>
+        <button class="mode-card mode-danger" onclick="App.startMode('danger')">
+          <div class="mode-icon">☠️</div>
+          <div class="mode-body">
+            <h3 data-i18n="modeDangerTitle">Gevaarlijkste Dier</h3>
+            <p data-i18n="modeDangerDesc">Welk dier is gevaarlijker?</p>
+          </div>
+          <div class="mode-arrow">›</div>
+        </button>
       </div>
 
       <div id="badge-strip" class="badge-strip"></div>
@@ -206,6 +214,41 @@
         <div id="match-done-result" class="fb-result" data-i18n="matchDoneResult">Alle paren gekoppeld!</div>
         <div id="match-score-txt" class="fun-fact"></div>
         <button class="btn-primary" data-i18n="btnBackMenu" onclick="App.goMenu()">Terug naar Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       SCREEN: Most Dangerous
+  ══════════════════════════════════════════════════════════ -->
+  <div id="screen-danger" class="screen">
+    <div class="game-wrap">
+      <div class="game-topbar">
+        <button class="btn-back" data-i18n="btnBack" onclick="App.goMenu()">← Terug</button>
+        <div class="progress-bar"><div id="danger-prog" class="progress-fill" style="width:0%"></div></div>
+        <div class="topbar-score">+<span id="danger-pts">0</span></div>
+      </div>
+
+      <p id="danger-question" class="danger-question"></p>
+
+      <div id="danger-cards" class="danger-cards">
+        <button class="danger-card" id="danger-card-a" onclick="App.answerDanger(0)">
+          <div id="danger-img-a" class="animal-emoji danger-img"></div>
+          <div id="danger-name-a" class="danger-name"></div>
+        </button>
+        <div class="danger-vs">VS</div>
+        <button class="danger-card" id="danger-card-b" onclick="App.answerDanger(1)">
+          <div id="danger-img-b" class="animal-emoji danger-img"></div>
+          <div id="danger-name-b" class="danger-name"></div>
+        </button>
+      </div>
+
+      <div id="danger-feedback" class="feedback-panel hidden">
+        <div id="danger-fb-icon" class="fb-icon"></div>
+        <div id="danger-fb-result" class="fb-result"></div>
+        <div id="danger-fb-why-a" class="fun-fact"></div>
+        <div id="danger-fb-why-b" class="fun-fact"></div>
+        <button class="btn-primary" data-i18n="btnNext" onclick="App.nextDanger()">Volgende →</button>
       </div>
     </div>
   </div>

@@ -26,6 +26,13 @@ const UI_STRINGS = {
     modeMatchDesc:     'Pair animals with their habitats',
     modeSpeedTitle:    'Speed Round',
     modeSpeedDesc:     '60 seconds — answer as many as you can!',
+    modeDangerTitle:   'Most Dangerous',
+    modeDangerDesc:    'Which animal is more dangerous?',
+    dangerQuestion:    'Which is more dangerous?',
+    dangerCorrect:     name => `Correct! The ${name} is more dangerous.`,
+    dangerWrong:       name => `Wrong! The ${name} is actually more dangerous.`,
+    dangerWhy:         name => `☠️ ${name}:`,
+    dangerRoundDone:   n => `🎉 Round complete! You scored ${n} pts`,
     btnBack:           '← Back',
     btnCorrect:        '✅ Correct',
     btnWrong:          '❌ Incorrect',
@@ -75,6 +82,13 @@ const UI_STRINGS = {
     modeMatchDesc:     'Koppel dieren aan hun leefgebied',
     modeSpeedTitle:    'Snelle Ronde',
     modeSpeedDesc:     '60 seconden — beantwoord zoveel mogelijk!',
+    modeDangerTitle:   'Gevaarlijkste Dier',
+    modeDangerDesc:    'Welk dier is gevaarlijker?',
+    dangerQuestion:    'Welk dier is gevaarlijker?',
+    dangerCorrect:     name => `Juist! De ${name} is gevaarlijker.`,
+    dangerWrong:       name => `Fout! De ${name} is eigenlijk gevaarlijker.`,
+    dangerWhy:         name => `☠️ ${name}:`,
+    dangerRoundDone:   n => `🎉 Ronde klaar! Je scoorde ${n} punten`,
     btnBack:           '← Terug',
     btnCorrect:        '✅ Juist',
     btnWrong:          '❌ Onjuist',
@@ -323,16 +337,55 @@ const GEO_QUESTIONS = [
 ];
 
 const MATCH_PAIRS = [
-  { a:'🦧 Orangutan',          a_nl:'🦧 Orang-oetan',            b:'🌴 Rainforest canopy',   b_nl:'🌴 Regenwoudkruin',    id:1 },
-  { a:'🐒 Proboscis Monkey',   a_nl:'🐒 Neusaap',                b:'🌊 Mangrove forest',     b_nl:'🌊 Mangrovebos',       id:2 },
-  { a:'🐢 Green Sea Turtle',   a_nl:'🐢 Groene Zeeschildpad',    b:'🏖️ Sandy beaches',       b_nl:'🏖️ Zandstranden',     id:3 },
-  { a:'🐻 Sun Bear',           a_nl:'🐻 Maleise Honingbeer',     b:'🌿 Tropical forest',     b_nl:'🌿 Tropisch bos',      id:4 },
-  { a:'🦜 Rhinoceros Hornbill',a_nl:'🦜 Neushoornhoornvogel',   b:'🌳 Old-growth trees',    b_nl:'🌳 Oerbomen',          id:5 },
-  { a:'🐊 Saltwater Crocodile',a_nl:'🐊 Zoutwaterkrokodil',     b:'🏞️ Rivers & estuaries', b_nl:'🏞️ Rivieren & delta\'s',id:6 },
-  { a:'🐾 Malayan Tapir',      a_nl:'🐾 Maleise Tapir',          b:'💧 Riverbank jungle',    b_nl:'💧 Rivieroeverjungel', id:7 },
-  { a:'🌿 Pitcher Plant',      a_nl:'🌿 Bekerplant',             b:'⛰️ Mountain slopes',     b_nl:'⛰️ Berghellingen',    id:8 },
-  { a:'✨ Firefly',            a_nl:'✨ Vuurvliegje',            b:'🌙 Mangrove rivers',     b_nl:'🌙 Mangroverivieren',  id:9 },
-  { a:'🦇 Giant Flying Fox',   a_nl:'🦇 Reuzen-vleerhond',       b:'🌅 Fruiting forest',    b_nl:'🌅 Vruchtengevend bos',id:10 },
+  { a:'🦧 Orangutan',          a_nl:'🦧 Orang-oetan',            b:'🌴 Rainforest canopy',   b_nl:'🌴 Regenwoudkruin',     id:1,  imgId:'orangutan'       },
+  { a:'🐒 Proboscis Monkey',   a_nl:'🐒 Neusaap',                b:'🌊 Mangrove forest',     b_nl:'🌊 Mangrovebos',        id:2,  imgId:'proboscis'       },
+  { a:'🐢 Green Sea Turtle',   a_nl:'🐢 Groene Zeeschildpad',    b:'🏖️ Sandy beaches',       b_nl:'🏖️ Zandstranden',      id:3,  imgId:'sea_turtle'      },
+  { a:'🐻 Sun Bear',           a_nl:'🐻 Maleise Honingbeer',     b:'🌿 Tropical forest',     b_nl:'🌿 Tropisch bos',       id:4,  imgId:'sun_bear'        },
+  { a:'🦜 Rhinoceros Hornbill',a_nl:'🦜 Neushoornhoornvogel',   b:'🌳 Old-growth trees',    b_nl:'🌳 Oerbomen',           id:5,  imgId:'hornbill'        },
+  { a:'🐊 Saltwater Crocodile',a_nl:'🐊 Zoutwaterkrokodil',     b:'🏞️ Rivers & estuaries', b_nl:'🏞️ Rivieren & delta\'s',id:6,  imgId:'crocodile'       },
+  { a:'🐾 Malayan Tapir',      a_nl:'🐾 Maleise Tapir',          b:'💧 Riverbank jungle',    b_nl:'💧 Rivieroeverjungel',  id:7,  imgId:'tapir'           },
+  { a:'🌿 Pitcher Plant',      a_nl:'🌿 Bekerplant',             b:'⛰️ Mountain slopes',     b_nl:'⛰️ Berghellingen',     id:8,  imgId:'pitcher'         },
+  { a:'✨ Firefly',            a_nl:'✨ Vuurvliegje',            b:'🌙 Mangrove rivers',     b_nl:'🌙 Mangroverivieren',   id:9,  imgId:'firefly'         },
+  { a:'🦇 Giant Flying Fox',   a_nl:'🦇 Reuzen-vleerhond',       b:'🌅 Fruiting forest',    b_nl:'🌅 Vruchtengevend bos', id:10, imgId:'flying_fox'      },
+];
+
+const DANGER_ANIMALS = [
+  { id:'saltwater_croc',  name:'Saltwater Crocodile',  name_nl:'Zoutwaterkrokodil',   gif:'crocodile',       emoji:'🐊', danger:10,
+    why:    'World\'s largest reptile — 1,000 kg, 5m+ long, bite force of 16,000 N. Responsible for more human deaths than any other reptile in Asia.',
+    why_nl: '\'s Werelds grootste reptiel — 1.000 kg, 5m+ lang, bijtkracht van 16.000 N. Verantwoordelijk voor meer menselijke doden dan enig ander reptiel in Azië.' },
+  { id:'king_cobra',      name:'King Cobra',            name_nl:'Koningscobra',         gif:'cobra',            emoji:'🐍', danger:9,
+    why:    'One bite injects enough venom to kill an elephant. Neurotoxin causes respiratory failure. Without treatment, death occurs within hours.',
+    why_nl: 'Eén beet spuit genoeg gif in om een olifant te doden. Neurotoxine veroorzaakt ademhalingsmoeilijkheden. Zonder behandeling treedt de dood in binnen uren.' },
+  { id:'stonefish',       name:'Stonefish',             name_nl:'Steenvis',             gif:null,               emoji:'🐟', danger:9,
+    why:    'World\'s most venomous fish. Spines inject venom causing excruciating pain, heart failure and paralysis. Camouflage makes it easy to step on.',
+    why_nl: '\'s Werelds giftigste vis. Stekels spuiten gif in dat hevige pijn, hartfalen en verlamming veroorzaakt. Zijn camouflage maakt het makkelijk om op te stappen.' },
+  { id:'reticulated_python', name:'Reticulated Python', name_nl:'Netvormige Python',   gif:null,               emoji:'🐍', danger:8,
+    why:    'World\'s longest snake at up to 8 metres. Strong enough to constrict and kill an adult human. Several fatal attacks recorded in Borneo.',
+    why_nl: '\'s Werelds langste slang, tot 8 meter. Sterk genoeg om een volwassen mens te verstikken en te doden. Meerdere fatale aanvallen geregistreerd op Borneo.' },
+  { id:'pit_viper',       name:'Malayan Pit Viper',     name_nl:'Maleise Groefadder',  gif:null,               emoji:'🐍', danger:7,
+    why:    'Responsible for more snakebite deaths in Malaysia than any other species. Haemotoxic venom destroys blood cells and causes severe internal bleeding.',
+    why_nl: 'Verantwoordelijk voor meer slangenbeten in Maleisië dan enige andere soort. Heemotoxisch gif vernietigt bloedcellen en veroorzaakt ernstige inwendige bloedingen.' },
+  { id:'sun_bear',        name:'Sun Bear',              name_nl:'Maleise Honingbeer',  gif:'sun_bear',         emoji:'🐻', danger:7,
+    why:    'Despite its small size, the Sun Bear is ferociously aggressive when threatened. Its powerful claws can tear through wood — and flesh.',
+    why_nl: 'Ondanks zijn kleine formaat is de maleise honingbeer uiterst agressief wanneer hij bedreigd wordt. Zijn krachtige klauwen kunnen hout — en vlees — verscheuren.' },
+  { id:'giant_hornet',    name:'Giant Hornet',          name_nl:'Reuzenhoornaar',       gif:null,               emoji:'🐝', danger:6,
+    why:    'Its sting injects venom that dissolves tissue and attracts other hornets to attack. Multiple stings can cause organ failure and death.',
+    why_nl: 'Zijn steek spuit gif in dat weefsel oplost en andere hoornaars aantrekt om aan te vallen. Meerdere steken kunnen orgaanfalen en de dood veroorzaken.' },
+  { id:'clouded_leopard', name:'Clouded Leopard',       name_nl:'Nevelpanter',          gif:'clouded_leopard',  emoji:'🐆', danger:6,
+    why:    'An ambush predator with the longest canine teeth of any wild cat relative to body size. Rarely attacks humans, but is incredibly powerful.',
+    why_nl: 'Een hinderlaagpredator met de langste hoektanden van alle wilde katachtigen in verhouding tot lichaamsgrootte. Valt mensen zelden aan, maar is ongelooflijk sterk.' },
+  { id:'slow_loris',      name:'Slow Loris',            name_nl:'Trage Lori',           gif:'slow_loris',       emoji:'🌙', danger:5,
+    why:    'The world\'s only venomous primate. Licks toxin from arm glands and delivers it through a bite, causing anaphylactic shock in some victims.',
+    why_nl: '\'s Werelds enige giftige primaat. Likt gif van armklieren en dient het toe via een beet, wat bij sommige slachtoffers een anafylactische shock veroorzaakt.' },
+  { id:'macaque',         name:'Long-tailed Macaque',   name_nl:'Langstaartige Makaak', gif:'macaque',          emoji:'🐵', danger:3,
+    why:    'Common around tourists but bites can transmit the Herpes B virus, which is fatal in humans without immediate treatment. Hundreds of bites reported yearly.',
+    why_nl: 'Veelvoorkomend bij toeristen, maar beten kunnen het herpes B-virus overbrengen, wat bij mensen fataal is zonder onmiddellijke behandeling. Honderden beten per jaar gemeld.' },
+  { id:'orangutan',       name:'Orangutan',             name_nl:'Orang-oetan',          gif:'orangutan',        emoji:'🦧', danger:4,
+    why:    'Peaceful by nature, but an adult male is 7× stronger than a human. When cornered, bites can cause serious injury requiring surgery.',
+    why_nl: 'Van nature vredelievend, maar een volwassen mannetje is 7× sterker dan een mens. Wanneer in het nauw gedreven, kunnen beten ernstig letsel veroorzaken dat operatie vereist.' },
+  { id:'pangolin',        name:'Pangolin',              name_nl:'Schubdier',            gif:'pangolin',         emoji:'🦔', danger:1,
+    why:    'Completely harmless to humans — its only defence is to curl into a ball. Its sharp scales protect it but it poses no danger whatsoever.',
+    why_nl: 'Volkomen onschadelijk voor mensen — zijn enige verdediging is zich oprollen tot een bal. Zijn scherpe schubben beschermen het, maar het vormt absoluut geen gevaar.' },
 ];
 
 const ACHIEVEMENTS = [
@@ -601,6 +654,7 @@ const App = (() => {
     else if (mode === 'explore') startExplore();
     else if (mode === 'match')   startMatch();
     else if (mode === 'speed')   startSpeed();
+    else if (mode === 'danger')  startDanger();
   }
 
   function goMenu() {
@@ -844,9 +898,6 @@ const App = (() => {
   let _matchMistakes = 0;
   let _matchPts      = 0;
 
-  function pairA(p) { return LANG === 'nl' ? (p.a_nl || p.a) : p.a; }
-  function pairB(p) { return LANG === 'nl' ? (p.b_nl || p.b) : p.b; }
-
   function startMatch() {
     _matchSelected = null;
     _matchPairs    = 0;
@@ -862,8 +913,8 @@ const App = (() => {
 
     const tiles = [];
     chosen.forEach(pair => {
-      tiles.push({ text: pairA(pair), pairId: pair.id, type: 'animal' });
-      tiles.push({ text: pairB(pair), pairId: pair.id, type: 'habitat' });
+      tiles.push({ text: LANG === 'nl' ? pair.a_nl : pair.a, pairId: pair.id, type: 'animal', imgId: pair.imgId });
+      tiles.push({ text: LANG === 'nl' ? pair.b_nl : pair.b, pairId: pair.id, type: 'habitat' });
     });
 
     const grid = $('match-grid');
@@ -871,10 +922,28 @@ const App = (() => {
     shuffle(tiles).forEach(t => {
       const el = document.createElement('div');
       el.className = 'match-tile';
-      el.textContent = t.text;
       el.dataset.pairId = t.pairId;
       el.dataset.type   = t.type;
       el.onclick = () => matchTileTap(el);
+
+      if (t.type === 'animal' && t.imgId) {
+        const img = document.createElement('img');
+        img.className = 'match-gif';
+        img.alt = t.text;
+        img.onerror = function() {
+          if (img.src.endsWith('.gif')) { img.src = `gifs/${t.imgId}.jpg`; }
+          else { el.innerHTML = ''; el.textContent = t.text; }
+        };
+        img.src = `gifs/${t.imgId}.gif`;
+        const lbl = document.createElement('div');
+        lbl.className = 'match-tile-label';
+        lbl.textContent = t.text.replace(/^\S+\s*/, '');
+        el.appendChild(img);
+        el.appendChild(lbl);
+      } else {
+        el.textContent = t.text;
+      }
+
       grid.appendChild(el);
     });
 
@@ -935,6 +1004,129 @@ const App = (() => {
     checkAchievements();
     persistPlayer();
     setTimeout(() => $('match-done').classList.remove('hidden'), 400);
+  }
+
+  // ════════════════════════════════════════════════════════════
+  //  MODE 5 — MOST DANGEROUS
+  // ════════════════════════════════════════════════════════════
+
+  let _dangerPool  = [];
+  let _dangerIdx   = 0;
+  let _dangerPts   = 0;
+  let _dangerPair  = null;
+  let _dangerStreak = 0;
+  const DANGER_ROUND = 10;
+
+  function dangerName(a) { return LANG === 'nl' ? (a.name_nl || a.name) : a.name; }
+  function dangerWhy(a)  { return LANG === 'nl' ? (a.why_nl  || a.why)  : a.why;  }
+
+  function startDanger() {
+    _dangerPts    = 0;
+    _dangerIdx    = 0;
+    _dangerStreak = 0;
+    _dangerPool   = shuffle(DANGER_ANIMALS);
+    $('danger-pts').textContent = '0';
+    showScreen('danger');
+    nextDangerQ();
+  }
+
+  function setDangerImg(elId, animal) {
+    const wrap = $(elId);
+    wrap.innerHTML = '';
+    wrap.classList.remove('has-gif');
+    if (animal.gif) {
+      const img = document.createElement('img');
+      img.className = 'animal-gif';
+      img.alt = dangerName(animal);
+      img.onerror = function() {
+        if (img.src.endsWith('.gif')) { img.src = `gifs/${animal.gif}.jpg`; }
+        else { wrap.textContent = animal.emoji; }
+      };
+      img.onload = () => wrap.classList.add('has-gif');
+      img.onclick = () => {
+        $('lightbox-img').src = img.src;
+        $('lightbox').classList.remove('hidden');
+      };
+      img.src = `gifs/${animal.gif}.gif`;
+      wrap.appendChild(img);
+    } else {
+      wrap.style.fontSize = '4rem';
+      wrap.textContent = animal.emoji;
+    }
+  }
+
+  function nextDangerQ() {
+    $('danger-feedback').classList.add('hidden');
+    $('danger-cards').style.display = '';
+    $('danger-card-a').classList.remove('danger-winner','danger-loser');
+    $('danger-card-b').classList.remove('danger-winner','danger-loser');
+    $('danger-card-a').disabled = false;
+    $('danger-card-b').disabled = false;
+
+    const i = _dangerIdx * 2;
+    const a = _dangerPool[i % _dangerPool.length];
+    const b = _dangerPool[(i + 1) % _dangerPool.length];
+    _dangerPair = { a, b };
+
+    setDangerImg('danger-img-a', a);
+    setDangerImg('danger-img-b', b);
+    $('danger-name-a').textContent = dangerName(a);
+    $('danger-name-b').textContent = dangerName(b);
+    $('danger-question').textContent = ui('dangerQuestion');
+
+    const prog = ((_dangerIdx % DANGER_ROUND) / DANGER_ROUND) * 100;
+    $('danger-prog').style.width = prog + '%';
+
+    player.totalAnswered++;
+    persistPlayer();
+  }
+
+  function answerDanger(choice) {
+    const { a, b } = _dangerPair;
+    const winner = a.danger >= b.danger ? 0 : 1;
+    const isRight = choice === winner;
+    const winnerAnimal = winner === 0 ? a : b;
+    const loserAnimal  = winner === 0 ? b : a;
+
+    $('danger-card-a').disabled = true;
+    $('danger-card-b').disabled = true;
+    $('danger-card-a').classList.add(winner === 0 ? 'danger-winner' : 'danger-loser');
+    $('danger-card-b').classList.add(winner === 1 ? 'danger-winner' : 'danger-loser');
+
+    if (isRight) {
+      _dangerPts += 10;
+      _dangerStreak++;
+      const bonus = _dangerStreak > 0 && _dangerStreak % 3 === 0 ? 5 : 0;
+      if (bonus) { _dangerPts += bonus; showToast(ui('toastStreakBonus', bonus)); }
+      addScore(10 + bonus);
+      $('danger-pts').textContent = _dangerPts;
+      player.bestStreak = Math.max(player.bestStreak, _dangerStreak);
+    } else {
+      _dangerStreak = 0;
+    }
+
+    $('danger-fb-icon').textContent   = isRight ? '✅' : '❌';
+    $('danger-fb-result').textContent = isRight
+      ? ui('dangerCorrect', dangerName(winnerAnimal))
+      : ui('dangerWrong',   dangerName(winnerAnimal));
+    $('danger-fb-result').className = 'fb-result ' + (isRight ? 'correct' : 'wrong');
+    $('danger-fb-why-a').innerHTML  = `<strong>${ui('dangerWhy', dangerName(winnerAnimal))}</strong> ${dangerWhy(winnerAnimal)}`;
+    $('danger-fb-why-b').innerHTML  = `<strong>🐾 ${dangerName(loserAnimal)}:</strong> ${dangerWhy(loserAnimal)}`;
+    $('danger-cards').style.display = 'none';
+    $('danger-feedback').classList.remove('hidden');
+
+    checkAchievements();
+    persistPlayer();
+  }
+
+  function nextDanger() {
+    _dangerIdx++;
+    if (_dangerIdx >= DANGER_ROUND) {
+      showToast(ui('dangerRoundDone', _dangerPts));
+      goMenu();
+      return;
+    }
+    nextDangerQ();
   }
 
   // ════════════════════════════════════════════════════════════
@@ -1090,6 +1282,9 @@ const App = (() => {
     nextExplore,
     showAchievements,
     hideAchievements,
+    // Danger
+    answerDanger,
+    nextDanger,
   };
 })();
 
